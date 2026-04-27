@@ -28,6 +28,8 @@ Operações/Procedimentos |
                            externas e dessa forma pode devolver 
                            varios dados
 */
+
+// Procedimento para adicionar um novo nó no final da lista ligada
 void append(Node** head_ref, int new_data)
 {Node* new = malloc(sizeof(Node));
     if (new!=NULL)
@@ -42,6 +44,8 @@ void append(Node** head_ref, int new_data)
             }
     }
 }
+
+// Procedimento para adicionar um novo nó no início da lista ligada
 void push(Node** head_ref, int new_data)
 {Node* new = malloc(sizeof(Node));
     if (new!=NULL)
@@ -49,6 +53,7 @@ void push(Node** head_ref, int new_data)
      new ->next=*head_ref;
     *head_ref = new;}
 }
+
 // remove a primeira interação da lista ligada 
 int pop(Node** head_ref){
     int guardar;

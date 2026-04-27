@@ -1,0 +1,122 @@
+88% de armazenamento usado … Se ficar sem espaço de armazenamento, não pode criar, editar nem carregar ficheiros. Receba 100 GB de armazenamento por 1,99 € 0,49 €/mês durante 3 meses (preço personalizado).
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct registo
+{int valor;
+ struct registo* esquerda;
+ struct registo* direita;
+} Node;
+
+Node* criarNo(int v)
+{Node* novo = (Node*) malloc(sizeof(Node));
+ if (novo!=NULL)
+   {novo->valor = v;
+    novo->esquerda = NULL;
+    novo->direita = NULL;
+   }
+ return(novo);
+}
+
+//Pré-Ordem (Pre-order): Raiz -> Esq -> Dir.
+void preOrder(Node* root)
+{
+    if (root!=NULL)
+    {
+        printf("%d ", root->valor);
+        preOrder(root->esquerda);
+        preOrder(root->direita);
+    }
+}
+
+//Em-Ordem (In-order): Esq -> Raiz -> Dir.
+void inOrder(Node* root)
+{
+    if (root!=NULL)
+    {
+        inOrder(root->esquerda);
+        printf("%d ", root->valor);
+        inOrder(root->direita);
+    }
+}
+
+//Pós-Ordem (Post-order): Esq -> Dir -> Raiz.
+void postOrder(Node* root)
+{if (root!=NULL)
+  {postOrder(root->esquerda);
+   postOrder(root->direita);
+   printf("%d ", root->valor);
+  }
+}
+
+int tamanho(Node* root) 
+{if (root==NULL) return(0);
+ return(1 + tamanho(root->esquerda) + tamanho(root->direita));
+}
+
+int folhas(Node* root) 
+{if (root==NULL) return(0);
+ else if ((root->esquerda==NULL)&&(root->direita==NULL)) return(1);
+ else return(folhas(root->esquerda) + folhas(root->direita));
+}
+
+int altura(Node* root) 
+{if (root==NULL) return(0);
+ else {int altEsq = altura(root->esquerda);
+       int altDir = altura(root->direita);
+       if (altEsq > altDir) return(1+altEsq);
+       else return(1+altDir);
+      }
+}
+
+// Alinea 1
+// Inserção numa Árvore Binária de Pesquisa (ABP)
+Node* inserirABP(Node* abp, int chave){
+    if (abp == NULL) return(criarNo(chave));
+    else if ((abp != NULL)&& (chave < abp->valor)) 
+        abp->esquerda = inserirABP(abp->esquerda, chave);
+    else if ((abp != NULL)&& (chave > abp->valor)) 
+        abp->direita = inserirABP(abp->direita, chave);
+    return(abp);
+}
+
+// Alinea 3
+// Devolcer o endereço do registro contendo a chave, 
+// ou NULL se a chave não existir na ABP 
+Node* pesquisarBST(Node* root, int chave) {
+    if (root == NULL) return(NULL);
+}
+
+int main()
+{Node* r1 = (Node*) criarNo(10);
+ Node* r2 = (Node*) criarNo(5);
+ Node* r3 = (Node*) criarNo(20);
+ Node* r4 = (Node*) criarNo(10);
+ Node* r5 = (Node*) criarNo(8);
+ Node* r6 = (Node*) criarNo(30);
+ Node* r7 = (Node*) criarNo(4);
+ Node* r8 = (Node*) criarNo(11);
+
+ r1->esquerda = r2;
+ r1->direita = r3;
+ r2->esquerda = r4;
+ r2->direita = r5;
+ r4->esquerda = r7;
+ r3->direita = r6;
+ r6->esquerda = r8;
+
+ printf("Pre-ordem: ");
+ preOrder(r1);
+ printf("\n");
+ printf("Em-ordem: ");
+ inOrder(r1);
+ printf("\n");
+ printf("Pos-ordem: ");
+ postOrder(r1);
+ printf("\n");
+
+ printf("Tamanho: %d\n", tamanho(r1));
+ printf("Folhas: %d\n", folhas(r1));
+ printf("Altura: %d\n", altura(r1));
+ return(0);
+}

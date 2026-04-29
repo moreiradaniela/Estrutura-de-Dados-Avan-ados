@@ -1,4 +1,3 @@
-88% de armazenamento usado … Se ficar sem espaço de armazenamento, não pode criar, editar nem carregar ficheiros. Receba 100 GB de armazenamento por 1,99 € 0,49 €/mês durante 3 meses (preço personalizado).
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,38 +84,78 @@ Node* inserirABP(Node* abp, int chave){
 // ou NULL se a chave não existir na ABP 
 Node* pesquisarBST(Node* root, int chave) {
     if (root == NULL) return(NULL);
+    else if (root->valor == chave) return(root);
+    else if (root->valor > chave) return(pesquisarBST(root->esquerda, chave));
+    else return(pesquisarBST(root->direita, chave));
+}
+
+int menor (Node* root, int* rest){
+    if(root == NULL) return(0);
+    else {
+        while (root->esquerda!= NULL) root = root->esquerda;
+        *rest = root->valor;
+        return(1);
+    }
 }
 
 int main()
-{Node* r1 = (Node*) criarNo(10);
- Node* r2 = (Node*) criarNo(5);
- Node* r3 = (Node*) criarNo(20);
- Node* r4 = (Node*) criarNo(10);
- Node* r5 = (Node*) criarNo(8);
- Node* r6 = (Node*) criarNo(30);
- Node* r7 = (Node*) criarNo(4);
- Node* r8 = (Node*) criarNo(11);
+{
+    Node* r1 = (Node*) criarNo(10);
+    Node* r2 = (Node*) criarNo(5);
+    Node* r3 = (Node*) criarNo(20);
+    Node* r4 = (Node*) criarNo(10);
+    Node* r5 = (Node*) criarNo(8);
+    Node* r6 = (Node*) criarNo(30);
+    Node* r7 = (Node*) criarNo(4);
+    Node* r8 = (Node*) criarNo(11);
 
- r1->esquerda = r2;
- r1->direita = r3;
- r2->esquerda = r4;
- r2->direita = r5;
- r4->esquerda = r7;
- r3->direita = r6;
- r6->esquerda = r8;
+    r1->esquerda = r2;
+    r1->direita = r3;
+    r2->esquerda = r4;
+    r2->direita = r5;
+    r4->esquerda = r7;
+    r3->direita = r6;
+    r6->esquerda = r8;
 
- printf("Pre-ordem: ");
- preOrder(r1);
- printf("\n");
- printf("Em-ordem: ");
- inOrder(r1);
- printf("\n");
- printf("Pos-ordem: ");
- postOrder(r1);
- printf("\n");
+    printf("Pre-ordem: ");
+    preOrder(r1);
+    printf("\n");
+    printf("Em-ordem: ");
+    inOrder(r1);
+    printf("\n");
+    printf("Pos-ordem: ");
+    postOrder(r1);
+    printf("\n");
 
- printf("Tamanho: %d\n", tamanho(r1));
- printf("Folhas: %d\n", folhas(r1));
- printf("Altura: %d\n", altura(r1));
- return(0);
+    printf("Tamanho: %d\n", tamanho(r1));
+    printf("Folhas: %d\n", folhas(r1));
+    printf("Altura: %d\n", altura(r1));
+
+
+    Node* abp = NULL;
+    abp = inserirABP(abp, 30);
+    abp = inserirABP(abp, 13);
+    abp = inserirABP(abp, 40);
+    abp = inserirABP(abp, 11);
+    abp = inserirABP(abp, 16);
+    abp = inserirABP(abp, 35);
+    abp = inserirABP(abp, 45);
+    abp = inserirABP(abp, 14);
+
+    inOrder(abp);
+    
+    printf("\n-------------------\n");
+
+    Node* res  = pesquisarBST(abp, 16);
+    if (res != NULL)
+        printf("Endereço: %p chave; %d\n", res, res->valor);
+    else printf("Chave não encontrada\n");
+
+
+    int aux;
+    int rest = menor(abp,&aux);
+    if (rest == 1) printf("Chave menor:%d\n", aux);
+    else printf("Arvore esta vazia!\n");
+    
+    return(0);
 }

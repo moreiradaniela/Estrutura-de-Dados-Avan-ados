@@ -88,13 +88,37 @@ Node* pesquisarBST(Node* root, int chave) {
     else if (root->valor > chave) return(pesquisarBST(root->esquerda, chave));
     else return(pesquisarBST(root->direita, chave));
 }
-
+/*4. Mínimo e Máximo: 
+Implemente funções para encontrar o menor 
+valor (extremo esquerdo) e o maior valor (extremo direito).*/
 int menor (Node* root, int* rest){
     if(root == NULL) return(0);
     else {
         while (root->esquerda!= NULL) root = root->esquerda;
         *rest = root->valor;
         return(1);
+    }
+}
+int maior (Node* root, int* rest){
+    if(root == NULL) return(0);
+    else {
+        while (root->direita!= NULL) root = root->direita;
+        *rest = root->valor;
+        return(1);
+    }
+}
+
+
+/*Secção 3. Alinea 6*/
+// Devolve 1 se é uma arvore binária de pesquisa, 0 caso contrário
+int BST (Node* root){
+    int aux_chave;
+    if (root == NULL) return(1);
+    else {
+        int chaveMenor;
+        int chaveMaior;
+        int res1 = maior(root->esquerda, &chaveMenor);
+        int res2 = menor(root->direita, &chaveMaior);
     }
 }
 
@@ -155,6 +179,11 @@ int main()
     int aux;
     int rest = menor(abp,&aux);
     if (rest == 1) printf("Chave menor:%d\n", aux);
+    else printf("Arvore esta vazia!\n");
+    
+    int aux1;
+    int rest1 = maior(abp,&aux);
+    if (rest == 1) printf("Chave maior:%d\n", aux);
     else printf("Arvore esta vazia!\n");
     
     return(0);
